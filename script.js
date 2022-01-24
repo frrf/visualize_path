@@ -11,7 +11,7 @@ $(document).ready(function(){
       success:function(data)
       {
         $('#excel_area').html(data);
-        $('table').css('width','100%');
+        $('table');//.css('width','100%');
       }
     })
   });

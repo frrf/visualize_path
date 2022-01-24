@@ -996,3 +996,4 @@ vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Calculation/DateTimeExcel/Tim
 vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Calculation/DateTimeExcel/NetworkDays.php
 *.xlsx
 phpsample.xlsx
+list.xlsx

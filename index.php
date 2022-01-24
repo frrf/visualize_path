@@ -7,7 +7,7 @@
   </head>
   <body>
     <header>
-      <h3>Load Excel Sheet in Browser using PHPSpreadsheet</h3>
+      <h3>Upload Route</h3>
       
       <section>
         <span id="message"></span> <!-- Erro messages -->
@@ -21,15 +21,15 @@
       </section>
     </header>
 
-    <main id="excel_area">
-      <table>
+    <main>
+      <table id="excel_area">
         <?php
           // LOAD PHPSPREADSHEET
           require "vendor/autoload.php";
           $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx(); 
 
           // OPEN SPREADSHEET
-          $spreadsheet = $reader->load("small.xlsx");
+          $spreadsheet = $reader->load("main.xlsx");
           $worksheet = $spreadsheet->getActiveSheet();
 
           // READ THE CELLS

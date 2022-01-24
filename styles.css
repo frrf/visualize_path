@@ -1,0 +1,27 @@
+body {
+  border: red 5px solid;
+  padding: 2px;
+}
+
+header {
+  border: rgb(255, 138, 138) 5px solid;
+  padding: 2px;
+}
+
+main {
+  border: rgb(59, 16, 16) 5px solid;
+  padding: 2px;
+}
+
+.cell {
+  padding:5px;
+  max-width:100%;
+  white-space:nowrap;
+  border: solid black 1px;
+}
+
+.cell_empty {
+  padding:10px 1rem;
+  max-width:100%;
+  border: solid black 1px;
+}

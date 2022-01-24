@@ -1,33 +1,61 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Display Excel As HTML </title>
+    <title>Load Excel Sheet in Browser using PHPSpreadsheet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css" />
   </head>
-<body>
-  <table>
-    <?php
-      // LOAD PHPSPREADSHEET
-      require "vendor/autoload.php";
-
-      $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx(); 
-
-      // OPEN SPREADSHEET
-      $spreadsheet = $reader->load("phpsample.xlsx");
-      $worksheet = $spreadsheet->getActiveSheet();
-
-      // READ THE CELLS
-      foreach ($worksheet->getRowIterator() as $row) {
-      $cellIterate = $row->getCellIterator();
-      $cellIterate->setIterateOnlyExistingCells(false);
+  <body>
+    <header>
+      <h3>Load Excel Sheet in Browser using PHPSpreadsheet</h3>
       
-      // OUTPUT
-      echo "<tr>";
-      foreach ($cellIterate as $cell) {
-        echo "<td>" . $cell->getValue() . "</td>";
-      }
-      echo "</tr>";
-      }
-    ?>
-  </table>
+      <section>
+        <span id="message"></span> <!-- Erro messages -->
+
+        <form method="post" id="load_excel_form" enctype="multipart/form-data">
+          <label for="enter">Select Excel File</label>
+          <input id="enter" type="file" name="select_excel"/>
+          <input type="submit" name="load"/>
+        </form>
+
+      </section>
+    </header>
+
+    <main id="excel_area">
+      <table>
+        <?php
+          // LOAD PHPSPREADSHEET
+          require "vendor/autoload.php";
+          $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx(); 
+
+          // OPEN SPREADSHEET
+          $spreadsheet = $reader->load("small.xlsx");
+          $worksheet = $spreadsheet->getActiveSheet();
+
+          // READ THE CELLS
+          foreach ($worksheet->getRowIterator() as $row) {
+          $cellIterate = $row->getCellIterator();
+          $cellIterate->setIterateOnlyExistingCells(false);
+          
+          // OUTPUT
+          echo "<tr>";
+          foreach ($cellIterate as $cell) {
+            if ($cell->getValue() == NULL) {
+              echo "<td class=\"cell_empty\"></td>";
+            } else if($cell->getValue() == 'D6-01-05') {
+              echo "<td class=\"cell\">" . $cell->getValue() . "</td>";
+
+            } else {
+              echo "<td class=\"cell\">" . $cell->getValue() . "</td>";
+            }
+          }
+          echo "</tr>";
+          }
+        ?>
+      </table>
+  </main>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

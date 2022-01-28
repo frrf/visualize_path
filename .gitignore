@@ -997,3 +997,4 @@ vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Calculation/DateTimeExcel/Net
 *.xlsx
 phpsample.xlsx
 list.xlsx
+*.csv

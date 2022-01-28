@@ -13,11 +13,11 @@
         <span id="message"></span> <!-- Erro messages -->
 
         <form method="post" id="load_excel_form" enctype="multipart/form-data">
-          <label for="enter">Select Excel File</label>
+          <label for="enter">Select CSV File</label>
           <input id="enter" type="file" name="select_excel"/>
           <input type="submit" name="load"/>
         </form>
-
+        <a href="#start">Go to start of path</a>;
       </section>
     </header>
 
@@ -29,7 +29,7 @@
           $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx(); 
 
           // OPEN SPREADSHEET
-          $spreadsheet = $reader->load("main.xlsx");
+          $spreadsheet = $reader->load("maps/main.xlsx");
           $worksheet = $spreadsheet->getActiveSheet();
 
           // READ THE CELLS

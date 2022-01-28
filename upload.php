@@ -18,7 +18,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 if($_FILES["select_excel"]["name"] != '') {
-    $allowed_extension = array('xls', 'xlsx');
+    $allowed_extension = array('xls', 'xlsx','csv');
     // split name of file by '.' to get file extension
     $file_array = explode(".", $_FILES['select_excel']['name']);
     $file_extension = end($file_array);
@@ -26,31 +26,42 @@ if($_FILES["select_excel"]["name"] != '') {
     // validate file type via extension
     if(in_array($file_extension, $allowed_extension)) {
       // convert list input to array
-      $reader = IOFactory::createReader('Xlsx');
+      $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+      // reader for excel extensions maybe expand via if/else statements
+      // $reader = IOFactory::createReader('Xlsx');
       $spreadsheet = $reader->load($_FILES['select_excel']['tmp_name']);
       $route = $spreadsheet->getActiveSheet()->toArray();
       $route = array_flatten($route, -1);
 
       // OPEN MAP
-      $spreadsheet = $reader->load("small.xlsx");
+      $reader = IOFactory::createReader('Xlsx');
+      $spreadsheet = $reader->load("maps/main.xlsx");
       $map = $spreadsheet->getActiveSheet();
 
       // READ THE CELLS
       foreach ($map->getRowIterator() as $row) {
         $cellIterate = $row->getCellIterator();
         $cellIterate->setIterateOnlyExistingCells(false);
-        
+
         // OUTPUT
         echo "<tr>";
         foreach ($cellIterate as $cell) {
-          if ($cell->getValue() == NULL) {
+          // prints empty areas of mapping
+          if ($cell->getValue() == NULL) { 
             echo "<td class=\"cell_empty\"></td>";
+            // if cell is not empty then check if the shelf # is in the route/path submitted
           } else if(in_array($cell->getValue(), $route)) {
-            if ($counter != count($route)){
-              $routeCellIndex = array_search($cell->getValue(), $route);
+            $routeCellIndex = array_search($cell->getValue(), $route);
+            if ($routeCellIndex == 0) {
+              echo "<td id=\"start\" 
+              class=\"cell_match\" 
+              style=\"background-color: rgb(0, 251," . 251 - ($routeCellIndex * 251/count($route)) . ");\">
+              <span class=\"route\">#" . $routeCellIndex+1 . "</span> " . $cell->getValue() . "
+              </td>";
+            } else {
               echo "<td 
                 class=\"cell_match\" 
-                style=\"background-color: rgb(0, 251," . 251 - ($routeCellIndex * 44) . ");\">
+                style=\"background-color: rgb(0, 251," . 251 - ($routeCellIndex * 251/count($route)) . ");\">
                 <span class=\"route\">#" . $routeCellIndex+1 . "</span> " . $cell->getValue() . "
                 </td>";
             }
@@ -73,7 +84,4 @@ if($_FILES["select_excel"]["name"] != '') {
 else {
   $message = '<div class="alert alert-danger">Please Select File</div>';
 }
-
-echo $message;
-
 ?>

@@ -32,6 +32,11 @@ if($_FILES["select_excel"]["name"] != '') {
       $spreadsheet = $reader->load($_FILES['select_excel']['tmp_name']);
       $route = $spreadsheet->getActiveSheet()->toArray();
       $route = array_flatten($route, -1);
+      $routeCounts = array_count_values($route);
+      // non-duplicate route to fix shelf sequence 1,2,3,4...
+      $route= array_flatten((array_unique($route)),-1);
+      // echo "<pre>" . print_r(array_flatten(array_unique($route)),-1) . "</pre>";
+
 
       // OPEN MAP
       $reader = IOFactory::createReader('Xlsx');
@@ -46,23 +51,36 @@ if($_FILES["select_excel"]["name"] != '') {
         // OUTPUT
         echo "<tr>";
         foreach ($cellIterate as $cell) {
-          // prints empty areas of mapping
-          if ($cell->getValue() == NULL) { 
-            echo "<td class=\"cell_empty\"></td>";
-            // if cell is not empty then check if the shelf # is in the route/path submitted
-          } else if(in_array($cell->getValue(), $route)) {
-            $routeCellIndex = array_search($cell->getValue(), $route);
-            if ($routeCellIndex == 0) {
+          $occurances = $routeCounts[$cell->getValue()];
+      // If cell is empty/null then cell is printed with empty styling class
+          if ($cell->getValue() == NULL) {
+            echo "<td class=\"cell cell_empty\"></td>";
+      // If cell is not empty then check if the shelf value is in the route/path submitted by user
+          } else if(in_array($cell->getValue(), $route)) { // hard check, if cell value is in route array proceed...
+            // Returns key/index of cell value that is in route array
+            $routeCellIndex = array_search($cell->getValue(), $route); 
+      // Check for starting shelf, add the "start" id tag to the starting element 
+            if ($routeCellIndex == 0) { 
               echo "<td id=\"start\" 
-              class=\"cell_match\" 
+              class=\"cell cell_match\" 
               style=\"background-color: rgb(0, 251," . 251 - ($routeCellIndex * 251/count($route)) . ");\">
-              <span class=\"route\">#" . $routeCellIndex+1 . "</span> " . $cell->getValue() . "
+              <span class=\"route\">#" . $routeCellIndex+1 . "</span>
+              <span class=\"route route_occurances\">x" . $occurances . "</span>
               </td>";
-            } else {
+      // If not first cell then only add cell_match class to element
+            } else if ($routeCellIndex+1 == count($route)) {
+              echo "<td id=\"end\" 
+              class=\"cell cell_match\" 
+              style=\"background-color: rgb(0, 251," . 251 - ($routeCellIndex * 251/count($route)) . ");\">
+              <span class=\"route\">#" . $routeCellIndex+1 . "</span>
+              <span class=\"route route_occurances\">x" . $occurances . "</span>
+              </td>";
+            }else {
               echo "<td 
-                class=\"cell_match\" 
+                class=\"cell cell_match\" 
                 style=\"background-color: rgb(0, 251," . 251 - ($routeCellIndex * 251/count($route)) . ");\">
-                <span class=\"route\">#" . $routeCellIndex+1 . "</span> " . $cell->getValue() . "
+                <span class=\"route\">#" . $routeCellIndex+1 . "</span>
+                <span class=\"route route_occurances\">x" . $occurances . "</span>
                 </td>";
             }
           } else {
@@ -71,12 +89,6 @@ if($_FILES["select_excel"]["name"] != '') {
         } // end of foreach loop
         echo "</tr>";
       }
-
-
-
-
-
-
     } else {
       $message = '<div class="alert alert-danger">Only .xls or .xlsx file allowed</div>';
     }

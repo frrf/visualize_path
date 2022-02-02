@@ -998,3 +998,4 @@ vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Calculation/DateTimeExcel/Net
 phpsample.xlsx
 list.xlsx
 *.csv
+webhostpassword.txt

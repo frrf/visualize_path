@@ -6,20 +6,33 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>
-      <h3>Upload Route</h3>
-      
-      <section>
-        <span id="message"></span> <!-- Erro messages -->
+    <aside>
+      <header class="aside">
+        <h3>Upload New Route</h3>
+        <div>
+          <span id="message"></span> <!-- Erro messages -->
+  
+          <form method="post" id="load_excel_form" enctype="multipart/form-data">
+            <label class="label-button" for="enter">Select CSV File</label>
+            <input type="submit" name="load"/>
+            <input id="enter" type="file" name="select_excel"/>
+          </form>
+          <a href="#start">Go to start of path</a>
+        </div>
+      </header>
 
-        <form method="post" id="load_excel_form" enctype="multipart/form-data">
-          <label for="enter">Select CSV File</label>
-          <input id="enter" type="file" name="select_excel"/>
-          <input type="submit" name="load"/>
+      <section class="aside">
+        <h3>Saved Routes</h3>
+        <form action="/">
+          <input type="radio" name="path1" id="path1"><label for="path1">test</label>
+          <input type="radio" name="path2" id="">
+          <input type="radio" name="path3" id="">
         </form>
-        <a href="#start">Go to start of path</a>;
       </section>
-    </header>
+
+
+    </aside>
+
 
     <main>
       <table id="excel_area">

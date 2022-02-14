@@ -3,17 +3,18 @@ body {
   margin: 0;
   padding:0;
   display: flex;
-  background-color: rgb(1, 15, 27);
+  background-color: rgb(3, 21, 36);
   font-family: Calibri;
 }
 
 .aside {
   border: black 3px solid;
-  margin: .5rem;
-  background-color: rgb(20, 33, 63);
+  margin-left: .5rem;
+  margin-top: .5rem;
+  background-color: rgb(25, 38, 70);
   padding: 10px;
-  width: fit-content;
-  width: 11rem;
+  /* width: fit-content; */
+  width: 9rem;
   height: fit-content;
   color: whitesmoke;
 }
@@ -30,10 +31,16 @@ header a:active {
   color: rgb(0, 255, 119);
 }
 
+#enter {
+  width: -webkit-fill-available;
+}
+
 h3 {
   margin:0;
 }
-
+main::-webkit-scrollbar {
+  display: none;
+}
 
 .cell {
   font-size: x-small;
@@ -42,14 +49,14 @@ h3 {
   white-space:nowrap;
   border: solid black 2px;
   margin: 0px;
-  background-color: rgb(90, 93, 122);
+  background-color: rgb(234, 234, 255);
 }
 
 .cell_empty {
-  background-color: lightgray;
+  background-color: rgb(252, 252, 253);
   padding:5px;
   max-width:100%;
-  border: solid rgb(243, 243, 243) .5px;
+  border: solid rgb(236, 236, 236) .5px;
 }
 
 .cell_match {
@@ -59,7 +66,7 @@ h3 {
 }
 
 #start {
-  border: solid rgb(6, 184, 0) 5px;
+  border: solid rgb(0, 204, 255) 5px;
 }
 
 #end {
@@ -74,7 +81,6 @@ h3 {
   color: rgb(195, 0, 0);
 }
 
-
 main {
   margin: .5rem;
   overflow-x:scroll;
@@ -85,4 +91,10 @@ main {
 }
 table {
   border-collapse: collapse;
+  text-align: center;
+}
+
+.radio {
+  display: flex;
+  flex-direction: column;
 }

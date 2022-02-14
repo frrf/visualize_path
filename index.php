@@ -8,14 +8,14 @@
   <body>
     <aside>
       <header class="aside">
-        <h3>Upload New Route</h3>
+        <h3>Upload Route</h3>
         <div>
           <span id="message"></span> <!-- Erro messages -->
   
           <form method="post" id="load_excel_form" enctype="multipart/form-data">
             <label class="label-button" for="enter">Select CSV File</label>
-            <input type="submit" name="load"/>
             <input id="enter" type="file" name="select_excel"/>
+            <input type="submit" name="load"/>
           </form>
           <a href="#start">Go to start of path</a>
         </div>
@@ -23,16 +23,17 @@
 
       <section class="aside">
         <h3>Saved Routes</h3>
-        <form action="/">
-          <input type="radio" name="path1" id="path1"><label for="path1">test</label>
-          <input type="radio" name="path2" id="">
-          <input type="radio" name="path3" id="">
+        <form action="/" class="radio">
+          <label for="path1"><input type="radio" name="path1" id="path1">Batch #2483</label>
+          <label for="path2"><input type="radio" name="path2" id="path2">Batch #2482</label>
+          <label for="path3"><input type="radio" name="path3" id="path3">Batch #2481</label>
+          <input type="submit" name="load"/>
+
         </form>
       </section>
 
 
     </aside>
-
 
     <main>
       <table id="excel_area">
@@ -66,7 +67,7 @@
           }
         ?>
       </table>
-  </main>
+    </main>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="script.js"></script>

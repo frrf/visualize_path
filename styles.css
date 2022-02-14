@@ -3,8 +3,7 @@ body {
   margin: 0;
   padding:0;
   display: flex;
-  /* background-color: rgb(3, 21, 36); */
-  background-color: rgb(40, 99, 148)!;
+  background-color: rgb(3, 21, 36);
   font-family: Calibri;
 }
 

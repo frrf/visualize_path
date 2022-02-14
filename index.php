@@ -23,7 +23,7 @@
 
       <section class="aside">
         <h3>Saved Routes</h3>
-        <form id="select_area" method="post" id="load_saved_route" enctype="multipart/form-data" class="radio">
+        <form method="post" id="load_saved_route" enctype="multipart/form-data" class="radio">
           <?php
             $user = "root";
             $password = "123";
@@ -45,7 +45,16 @@
                   // prints out all the first_name and last_name column rows in the table
                   $count = 0;
                   while($Row = mysqli_fetch_array($QueryResult)) {
-                    echo "<label for=\"path".$count."\"><input type=\"radio\" name=\"path\" id=\"path".$count."\">Batch #{$Row['batch_id']}</label>";
+                    echo "
+                      <label for=\"path".$count."\">
+                        <input 
+                          type=\"radio\" 
+                          name=\"batch_id\" 
+                          id=\"path".$count."\" 
+                          value=\"{$Row['batch_id']}\"
+                        >
+                      Batch #{$Row['batch_id']}
+                      </label>";
                     $count++;
                   }
                   mysqli_free_result($QueryResult);
@@ -54,7 +63,7 @@
               }
             }
           ?>
-          <input type="submit" name="select"/>
+          <input type="submit"/>
         </form>
       </section>
 

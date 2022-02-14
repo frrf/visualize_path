@@ -4,7 +4,7 @@ $(document).ready(function(){
     event.preventDefault();
     $.ajax({
       url:"select.php",
-      method:"GET",
+      method:"post",
       data:new FormData(this),
       contentType:false,
       cache:false,
@@ -12,7 +12,7 @@ $(document).ready(function(){
       success:function(data)
       {
         $('#excel_area').html(data);
-        console.log("works")
+        console.log(data);
       }
     })
   });

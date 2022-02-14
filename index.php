@@ -23,12 +23,38 @@
 
       <section class="aside">
         <h3>Saved Routes</h3>
-        <form action="/" class="radio">
-          <label for="path1"><input type="radio" name="path1" id="path1">Batch #2483</label>
-          <label for="path2"><input type="radio" name="path2" id="path2">Batch #2482</label>
-          <label for="path3"><input type="radio" name="path3" id="path3">Batch #2481</label>
-          <input type="submit" name="load"/>
+        <form id="select_area" method="post" id="load_saved_route" enctype="multipart/form-data" class="radio">
+          <?php
+            $user = "root";
+            $password = "123";
+            $host = "localhost";
 
+            $DBConnect = mysqli_connect($host, $user,$password);
+            // Check connection to database
+            if ($DBConnect === FALSE) echo "<p>Unable to connect to the database server.</p>" . "<p>Error code " . mysqli_errno() . ": " . mysqli_error() . "</p>";
+            else {
+              $DBName = "saved_routes";
+              if (!mysqli_select_db($DBConnect, $DBName)) echo "<p>There are no entries in the interview logs!</p>";
+              else {
+                $TableName = "routes";
+                $SQLstring = "SELECT batch_id FROM $TableName";
+                $QueryResult = mysqli_query($DBConnect, $SQLstring);
+                // Checks if the table is empty
+                if (mysqli_num_rows($QueryResult) == 0) echo "<p>There are no entries in the interview logs!</p>";
+                else {
+                  // prints out all the first_name and last_name column rows in the table
+                  $count = 0;
+                  while($Row = mysqli_fetch_array($QueryResult)) {
+                    echo "<label for=\"path".$count."\"><input type=\"radio\" name=\"path\" id=\"path".$count."\">Batch #{$Row['batch_id']}</label>";
+                    $count++;
+                  }
+                  mysqli_free_result($QueryResult);
+                }
+                mysqli_close($DBConnect);
+              }
+            }
+          ?>
+          <input type="submit" name="select"/>
         </form>
       </section>
 

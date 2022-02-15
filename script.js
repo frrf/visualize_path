@@ -12,13 +12,13 @@ $(document).ready(function(){
       success:function(data)
       {
         $('#excel_area').html(data);
-        console.log(data);
       }
     })
   });
 });
+
 $(document).ready(function(){
-  $('#load_excel_form').on('submit', function(event){
+  $('#load_csv_form').on('submit', function(event){
     event.preventDefault();
     $.ajax({
       url:"upload.php",
@@ -31,7 +31,6 @@ $(document).ready(function(){
       {
         $('#excel_area').html(data);
         // $('table');
-        console.log("fail")
       }
     })
   });

@@ -71,9 +71,6 @@ function show_route($route, $routeCounts) {
   }
 }
 
-
-// echo print_r($_POST);
-
 if($_POST["batch_id"] != '') {
   $batch_id = $_POST["batch_id"];
   
@@ -107,9 +104,8 @@ if($_POST["batch_id"] != '') {
   $route = str_replace('"',"",trim($batch_data["route_shelves"],'[]'));
   $route = explode(',',$route);
   $routeCounts = str_replace('"',"",trim($batch_data["shelf_occurances"],'[]{}'));
-  $routeCounts = explode(',',$routeCounts);
+  $routeCounts = (array) json_decode($batch_data["shelf_occurances"]);
   show_route($route,$routeCounts);
-
 } else {
   $message = '<div class="alert alert-danger">Only .xls or .xlsx file allowed</div>';
 }

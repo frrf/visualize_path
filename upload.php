@@ -91,9 +91,9 @@ if($_FILES["select_excel"]["name"] != '') {
       $route= array_flatten((array_unique($route)),-1);
       // echo "<pre>" . print_r(array_flatten(array_unique($route)),-1) . "</pre>";
 
-      show_route($route,$routeCounts);
+      // show_route($route,$routeCounts);
 
-
+      echo print_r($routeCounts);
 
       // (array) + json_decode(array) to download from MySQL
       $user = "root";
@@ -102,7 +102,7 @@ if($_FILES["select_excel"]["name"] != '') {
       $DBConnect = mysqli_connect($host, $user,$password);
       // Checks if mysqli_connect was succesful
       if($DBConnect===FALSE) {
-        echo "<td>Unable to connect to the databse server.</p>" . "<p>Error code " . mysqli_errno() . ": " . mysqli_error() . "</td>";
+        // echo "<td>Unable to connect to the databse server.</p>" . "<p>Error code " . mysqli_errno() . ": " . mysqli_error() . "</td>";
       } else { 
         $DBName = "saved_routes";
         // Check if saved_routes database exists
@@ -111,7 +111,7 @@ if($_FILES["select_excel"]["name"] != '') {
           $QueryResult = mysqli_query($DBConnect, $SQLstring);
           // Checks if the create database query was succesful 
           if ($QueryResult === FALSE) {
-            echo "<td>Unable to execute the query.</td>" . "<td>Error code " . mysqli_errno($DBConnect) . ": " . mysqli_error($DBConnect) . "</td>";
+            // echo "<td>Unable to execute the query.</td>" . "<td>Error code " . mysqli_errno($DBConnect) . ": " . mysqli_error($DBConnect) . "</td>";
           } else {
             // Confirms that the candidates database has been created 
             echo "<td>First route!</td>";
@@ -131,7 +131,7 @@ if($_FILES["select_excel"]["name"] != '') {
             $QueryResult = mysqli_query($DBConnect,$SQLstring);
             // since table doesn't exist, check if table can be created succesfully
             if ($QueryResult === FALSE) {
-              echo "<td>Unable to create the table.</td>" . "<td>Error code " . mysqli_errno($DBConnect) . ": " . mysqli_error($DBConnect) . "</td>";
+              // echo "<td>Unable to create the table.</td>" . "<td>Error code " . mysqli_errno($DBConnect) . ": " . mysqli_error($DBConnect) . "</td>";
             } else {
               echo "<td>Created table</td>";
             }
@@ -153,7 +153,7 @@ if($_FILES["select_excel"]["name"] != '') {
         $QueryResult = mysqli_query($DBConnect,$SQLstring);
         // checks if the insert query can run successfully
         if ($QueryResult === FALSE) {
-            echo "<td>Unable to execute the query.</td>" . "<td>Error code " . mysqli_errno($DBConnect) . ": " . mysqli_error($DBConnect) . "</td>";
+            // echo "<td>Unable to execute the query.</td>" . "<td>Error code " . mysqli_errno($DBConnect) . ": " . mysqli_error($DBConnect) . "</td>";
         } else {
             echo "<td>Route logged!</td>";
         }

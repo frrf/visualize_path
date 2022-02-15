@@ -12,7 +12,7 @@
         <div>
           <span id="message"></span> <!-- Erro messages -->
   
-          <form method="post" id="load_excel_form" enctype="multipart/form-data">
+          <form method="post" id="load_csv_form" enctype="multipart/form-data">
             <label class="label-button" for="enter">Select CSV File</label>
             <input id="enter" type="file" name="select_excel"/>
             <input type="submit" name="load"/>

@@ -91,9 +91,6 @@
           foreach ($cellIterate as $cell) {
             if ($cell->getValue() == NULL) {
               echo "<td class=\"cell_empty\"></td>";
-            } else if($cell->getValue() == 'D6-01-05') {
-              echo "<td class=\"cell\">" . $cell->getValue() . "</td>";
-
             } else {
               echo "<td class=\"cell\">" . $cell->getValue() . "</td>";
             }

@@ -91,10 +91,9 @@ if($_FILES["select_excel"]["name"] != '') {
       $route= array_flatten((array_unique($route)),-1);
       // echo "<pre>" . print_r(array_flatten(array_unique($route)),-1) . "</pre>";
 
-      // show_route($route,$routeCounts);
+      show_route($route,$routeCounts);
 
-      echo print_r($routeCounts);
-
+      // -- UPLOAD ROUTE --
       // (array) + json_decode(array) to download from MySQL
       $user = "root";
       $password = "123";

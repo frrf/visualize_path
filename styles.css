@@ -19,6 +19,16 @@ body {
   color: whitesmoke;
 }
 
+.bad_flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.saved_routes_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .collapse_aside {
   background-color: rgb(25, 38, 70);
   color: whitesmoke;

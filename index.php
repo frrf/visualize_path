@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <aside>
+    <aside id="hide">
       <header class="aside">
-        <h3>Upload Route</h3>
+          <h3>Upload Route</h3>
         <div>
           <span id="message"></span> <!-- Erro messages -->
   
@@ -22,7 +22,7 @@
       </header>
 
       <section class="aside">
-        <h3>Saved Routes</h3>
+        <h3 id="db_activity">Saved Routes</h3>
         <form method="post" id="load_saved_route" enctype="multipart/form-data" class="radio">
           <?php
             $user = "root";
@@ -34,13 +34,13 @@
             if ($DBConnect === FALSE) echo "<p>Unable to connect to the database server.</p>" . "<p>Error code " . mysqli_errno() . ": " . mysqli_error() . "</p>";
             else {
               $DBName = "saved_routes";
-              if (!mysqli_select_db($DBConnect, $DBName)) echo "<p>There are no entries in the interview logs!</p>";
+              if (!mysqli_select_db($DBConnect, $DBName)) echo "<p>There are no entries in the DB!</p>";
               else {
                 $TableName = "routes";
                 $SQLstring = "SELECT batch_id FROM $TableName";
                 $QueryResult = mysqli_query($DBConnect, $SQLstring);
                 // Checks if the table is empty
-                if (mysqli_num_rows($QueryResult) == 0) echo "<p>There are no entries in the interview logs!</p>";
+                if (mysqli_num_rows($QueryResult) == 0) echo "<p>There are no entries in the DB!</p>";
                 else {
                   // prints out all the first_name and last_name column rows in the table
                   $count = 0;
@@ -65,12 +65,13 @@
           ?>
           <input type="submit"/>
         </form>
+        <form method="post" id="clear_DB" enctype="multipart/form-data">
+          <input type="submit" value="Clear DB"/>
+        </form>
       </section>
-
-
     </aside>
 
-    <main>
+    <main id="table">
       <table id="excel_area">
         <?php
           // LOAD PHPSPREADSHEET
@@ -100,6 +101,8 @@
         ?>
       </table>
     </main>
+    
+    <button id="collapse_button" onclick="hide()" class="collapse_aside">⛶</button>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src="script.js"></script>

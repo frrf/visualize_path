@@ -17,7 +17,7 @@ function array_flatten($array = null, $depth = 1) {
   return $result;
 }
 
-function show_route($route, $routeCounts) {
+function show_route($route, $routeCounts, $available) {
   // OPEN MAP
   $reader = IOFactory::createReader('Xlsx');
   $spreadsheet = $reader->load("maps/main.xlsx");
@@ -39,11 +39,13 @@ function show_route($route, $routeCounts) {
       } else if(in_array($cell->getValue(), $route)) { // hard check, if cell value is in route array proceed...
         // Returns key/index of cell value that is in route array
         $routeCellIndex = array_search($cell->getValue(), $route); 
+
+
   // Check for starting shelf, add the "start" id tag to the starting element 
         if ($routeCellIndex == 0) { 
           echo "<td id=\"start\" 
           class=\"cell cell_match\" 
-          style=\"background-color: rgb(0, 251," . 251 - ($routeCellIndex * 251/count($route)) . ");\">
+          style=\"background-color: rgb(0, " . 255 - ($routeCellIndex * 1.5) . "," . 255 - ($routeCellIndex * 255/count($route)) . ");\">
           <span class=\"route\">#" . $routeCellIndex+1 . "</span>
           <span class=\"route route_occurances\">x" . $occurances . "</span>
           </td>";
@@ -51,18 +53,23 @@ function show_route($route, $routeCounts) {
         } else if ($routeCellIndex+1 == count($route)) {
           echo "<td id=\"end\" 
           class=\"cell cell_match\" 
-          style=\"background-color: rgb(0, 251," . 251 - ($routeCellIndex * 251/count($route)) . ");\">
+          style=\"background-color: rgb(0, " . 255 - ($routeCellIndex * 1.5) . "," . 255 - ($routeCellIndex * 255/count($route)) . ");\">
           <span class=\"route\">#" . $routeCellIndex+1 . "</span>
           <span class=\"route route_occurances\">x" . $occurances . "</span>
           </td>";
         }else {
           echo "<td 
             class=\"cell cell_match\" 
-            style=\"background-color: rgb(0, 251," . 251 - ($routeCellIndex * 251/count($route)) . ");\">
+            style=\"background-color: rgb(0, " . 255 - ($routeCellIndex * 1.5) . "," . 255 - ($routeCellIndex * 255/count($route)) . ");\">
             <span class=\"route\">#" . $routeCellIndex+1 . "</span>
             <span class=\"route route_occurances\">x" . $occurances . "</span>
             </td>";
         }
+      } else if(in_array($cell->getValue(), $available)) { // hard check, if cell value is in route array proceed...
+        echo "<td class=\"cell\"
+        style=\"background-color:RGB(255, 119, 255);\">" . $cell->getValue() . "</td>";
+      //   echo "<td class=\"cell\">" . $cell->getValue() . "</td>";
+
       } else {
         echo "<td class=\"cell\">" . $cell->getValue() . "</td>";
       } // end of IF / Else 
@@ -83,6 +90,14 @@ if($_FILES["select_excel"]["name"] != '') {
       $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
       // reader for excel extensions maybe expand via if/else statements
       // $reader = IOFactory::createReader('Xlsx');
+
+      $available_csv = $reader->load("maps/nda_available.csv");
+      $available = $available_csv->getActiveSheet()->toArray();
+      $available = array_flatten($available, -1);
+      $available= array_flatten((array_unique($available)),-1);
+
+
+
       $spreadsheet = $reader->load($_FILES['select_excel']['tmp_name']);
       $route = $spreadsheet->getActiveSheet()->toArray();
       $route = array_flatten($route, -1);
@@ -91,7 +106,7 @@ if($_FILES["select_excel"]["name"] != '') {
       $route= array_flatten((array_unique($route)),-1);
       // echo "<pre>" . print_r(array_flatten(array_unique($route)),-1) . "</pre>";
 
-      show_route($route,$routeCounts);
+      show_route($route,$routeCounts,$available);
 
       // -- UPLOAD ROUTE --
       // (array) + json_decode(array) to download from MySQL
